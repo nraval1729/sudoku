@@ -18,5 +18,19 @@ app.get("/", function(req, res) {
 	res.render("index.html");
 });
 
+app.get("/puzzle", function(req, res) {
+	var q = "SELECT * FROM puzzles ORDER BY RANDOM() LIMIT 1";
+	conn.query(q, function(err, result) {
+		sendPuzzle(err, result, res);
+	});
+});
+
+// Helpers
+
+function sendPuzzle(err, result, res) {
+	console.log("INSIDE, result: " +result);
+	res.send(result);
+} 
+
 app.listen(process.env.PORT || 5000);
 console.log("Server started. Listening.");
